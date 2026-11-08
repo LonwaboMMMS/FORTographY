@@ -1152,3 +1152,30 @@ a {
 .contact-icon.whatsapp-icon{color:#25D366}
 .contact-icon.whatsapp-icon svg{width:25px;height:25px}
 .contact-icon.facebook-icon svg{width:25px;height:25px}
+
+
+/* KEEP COLLECTION PHOTO NUMBERS IN LEFT-TO-RIGHT ROW ORDER */
+.catalogue-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    columns: unset;
+}
+
+.catalogue-grid .photo-card {
+    break-inside: auto;
+    margin-bottom: 0;
+}
+
+@media(max-width: 1100px) {
+    .catalogue-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media(max-width: 380px) {
+    .catalogue-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+}
