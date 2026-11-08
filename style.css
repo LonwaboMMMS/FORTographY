@@ -212,6 +212,7 @@ a {
 }
 
 .top-actions {
+    margin-left: auto;
     display: flex;
     align-items: center;
     gap: 15px;
@@ -1145,3 +1146,9 @@ a {
 .contact-action svg{width:14px;color:var(--orange)}
 @media(max-width:900px){.contact-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){.contact-grid{grid-template-columns:1fr;gap:12px;margin-top:28px}.contact-card{min-height:205px;padding:21px}}
+
+
+/* CONTACT BRAND ICONS */
+.contact-icon.whatsapp-icon{color:#25D366}
+.contact-icon.whatsapp-icon svg{width:25px;height:25px}
+.contact-icon.facebook-icon svg{width:25px;height:25px}
