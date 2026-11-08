@@ -421,53 +421,11 @@ document.querySelectorAll(".category-chip").forEach(button => {
 
         activeCategory = button.dataset.category;
 
-        if (searchInput) {
-            searchInput.value = "";
-        }
-
         updateHomeGrid();
 
     });
 
 });
-
-
-// =====================================
-// SEARCH
-// =====================================
-
-if (searchInput) {
-
-    searchInput.addEventListener("input", () => {
-
-        const query = searchInput.value.toLowerCase().trim();
-
-        const results = photos.filter(photo => {
-
-            const matchesQuery =
-                photo.title.toLowerCase().includes(query) ||
-                photo.category.toLowerCase().includes(query) ||
-                photo.collection.toLowerCase().includes(query) ||
-                photo.description.toLowerCase().includes(query);
-
-            const matchesCategory =
-                activeCategory === "all" ||
-                photo.category === activeCategory;
-
-            return matchesQuery && matchesCategory;
-
-        });
-
-        showPage("home");
-
-        renderPhotos("photoGrid", results);
-
-        document.getElementById("emptyState").style.display =
-            results.length === 0 ? "block" : "none";
-
-    });
-
-}
 
 
 // =====================================
