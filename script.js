@@ -87,19 +87,13 @@ try {
 setTheme(savedTheme);
 
 
-// Toggle theme
-if (themeToggle) {
-
-    themeToggle.addEventListener("click", () => {
-
-        const currentTheme =
-            document.documentElement.getAttribute("data-theme");
-
-        setTheme(currentTheme === "dark" ? "light" : "dark");
-
-    });
-
-}
+// Toggle theme with delegated handling so icon replacement cannot break clicks.
+document.addEventListener("click", event => {
+    const toggle = event.target.closest("#themeToggle");
+    if (!toggle) return;
+    const currentTheme = document.documentElement.getAttribute("data-theme");
+    setTheme(currentTheme === "light" ? "dark" : "light");
+});
 
 
 // =====================================
@@ -522,10 +516,6 @@ function showPage(page) {
 
     });
 
-    if (page === "explore") {
-        renderExplore();
-    }
-
     if (page === "collections") {
         renderCollections();
     }
@@ -554,45 +544,6 @@ document.addEventListener("click", event => {
     }
 
 });
-
-
-// =====================================
-// EXPLORE PAGE
-// =====================================
-
-function renderExplore() {
-
-    const container = document.getElementById("exploreGrid");
-
-    if (!container) return;
-
-    container.innerHTML = collections.map(collection => `
-
-        <div
-            class="explore-tile"
-            data-open-collection="${collection.id}"
-            role="button"
-            tabindex="0"
-            aria-label="Explore ${collection.title}"
-        >
-
-            <img
-                src="${collection.image}"
-                alt="${collection.title}"
-                loading="lazy"
-            >
-
-            <div>
-                <h2>${collection.title}</h2>
-                <span>${collection.description}</span>
-            </div>
-
-        </div>
-
-    `).join("");
-
-    refreshIcons();
-}
 
 
 // =====================================
@@ -805,7 +756,6 @@ document.addEventListener("keydown", event => {
 
 updateHomeGrid();
 
-renderExplore();
 
 renderCollections();
 
