@@ -570,9 +570,9 @@ function openCollection(collectionId) {
 
     currentCatalogue = collection;
 
-    const collectionPhotos = photos.filter(photo =>
-        photo.category === collection.category
-    );
+    const collectionPhotos = photos
+        .filter(photo => photo.category === collection.category)
+        .sort((a, b) => a.id - b.id);
 
     document.getElementById("catalogueEyebrow").textContent =
         collection.subtitle;
