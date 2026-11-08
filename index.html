@@ -7,13 +7,16 @@
     <meta name="theme-color" content="#121212">
 
     <title>Reverb FORTographY | Visual Storytelling</title>
+    <meta name="description" content="Discover visual stories, portraits, cultural celebrations and photography collections by Reverb FORTographY.">
+
+    <link rel="icon" type="image/png" href="images/favicon.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
+
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
@@ -25,8 +28,12 @@
     <aside class="sidebar">
 
         <a href="#" class="logo" data-page="home">
-            <span class="logo-icon"><i data-lucide="aperture"></i></span>
-            <span>REVERB <span class="orange">FORTographY</span></span>
+            <img
+                src="images/Reverb%20FORTography%20Logo%20(For%20Dark%20Mode).png"
+                alt="Reverb FORTographY"
+                class="brand-logo"
+                id="sidebarLogo"
+            >
         </a>
 
         <div class="side-section">
@@ -73,21 +80,40 @@
         <header class="topbar">
 
             <a href="#" class="mobile-logo" data-page="home">
-                <i data-lucide="aperture"></i>
-                REVERB <span class="orange">FORTographY</span>
+                <img
+                    src="images/Reverb%20FORTography%20Logo%20(For%20Dark%20Mode).png"
+                    alt="Reverb FORTographY"
+                    class="brand-logo"
+                    id="mobileLogo"
+                >
             </a>
 
             <div class="search-box">
                 <i data-lucide="search"></i>
-                <input type="text" id="searchInput" placeholder="Search photographs and collections...">
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search photographs and collections..."
+                >
                 <span class="search-shortcut">SEARCH</span>
             </div>
 
             <div class="top-actions">
+
+                <button
+                    class="theme-toggle"
+                    id="themeToggle"
+                    aria-label="Switch to light mode"
+                    title="Change appearance"
+                >
+                    <i data-lucide="sun"></i>
+                </button>
+
                 <a href="mailto:fortography@reverbdailymedia.co.za" class="upload-btn">
                     <i data-lucide="mail"></i>
                     <span>Get in touch</span>
                 </a>
+
             </div>
 
         </header>
@@ -128,7 +154,7 @@
             <div class="featured-card">
 
                 <img
-                    src="images/Memulo-Event-Photography (1).jpg"
+                    src="images/Memulo-Event-Photography%20(1).jpg"
                     alt="Memulo event photography"
                     class="featured-image"
                 >
@@ -243,7 +269,7 @@
         <!-- PHOTO VIEWER -->
         <div class="photo-modal" id="photoModal">
 
-            <button class="modal-close" id="modalClose">
+            <button class="modal-close" id="modalClose" aria-label="Close photograph">
                 <i data-lucide="x"></i>
             </button>
 
