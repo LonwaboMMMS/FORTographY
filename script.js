@@ -392,16 +392,31 @@ function getFilteredPhotos() {
 
 function updateHomeGrid() {
 
-    const filtered = getFilteredPhotos();
+    const container = document.getElementById("photoGrid");
+    if (!container) return;
 
-    renderPhotos("photoGrid", filtered);
+    const visibleCollections = activeCategory === "all"
+        ? collections
+        : collections.filter(collection => collection.category === activeCategory);
+
+    container.innerHTML = visibleCollections.map(collection => {
+        const collectionPhotos = photos
+            .filter(photo => photo.category === collection.category)
+            .sort((a, b) => sortLatest ? a.id - b.id : b.id - a.id);
+
+        return `
+            <div class="photo-column">
+                ${collectionPhotos.map(createPhotoCard).join("")}
+            </div>
+        `;
+    }).join("");
 
     const emptyState = document.getElementById("emptyState");
-
     if (emptyState) {
-        emptyState.style.display =
-            filtered.length === 0 ? "block" : "none";
+        emptyState.style.display = visibleCollections.length === 0 ? "block" : "none";
     }
+
+    refreshIcons();
 }
 
 
