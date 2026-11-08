@@ -1,18 +1,24 @@
 
-/* =====================================
-   REVERB FORTographY
-   Photography catalogue
-===================================== */
+// =====================================
+// REVERB FORTographY
+// Photography portfolio
+// =====================================
+
+const CONTACT_EMAIL = "fortography@reverbdailymedia.co.za";
+
+
+// PHOTOGRAPHS
 
 const photos = [
-    // THE PORTRAIT SESSIONS
+
+    // PORTRAIT SESSIONS
     {
         id: 1,
         title: "Portrait Session 01",
         category: "portraits",
         collection: "The Portrait Sessions",
         image: "images/Individual-Photography (1).jpg",
-        description: "Individual photography capturing personality and expression."
+        description: "People, identity and individual expression."
     },
     {
         id: 2,
@@ -55,10 +61,11 @@ const photos = [
         description: "Another perspective from the portrait collection."
     },
 
-    // MEMULO STORIES
+
+    // MEMULO PHOTOGRAPHY
     {
         id: 7,
-        title: "The Celebration 01",
+        title: "Memulo 01",
         category: "memulo",
         collection: "Memulo: A Celebration of Tradition",
         image: "images/Memulo-Event-Photography (1).jpg",
@@ -66,7 +73,7 @@ const photos = [
     },
     {
         id: 8,
-        title: "The Celebration 02",
+        title: "Memulo 02",
         category: "memulo",
         collection: "Memulo: A Celebration of Tradition",
         image: "images/Memulo-Event-Photography (2).jpg",
@@ -74,7 +81,7 @@ const photos = [
     },
     {
         id: 9,
-        title: "The Celebration 03",
+        title: "Memulo 03",
         category: "memulo",
         collection: "Memulo: A Celebration of Tradition",
         image: "images/Memulo-Event-Photography (3).jpg",
@@ -82,7 +89,7 @@ const photos = [
     },
     {
         id: 10,
-        title: "The Celebration 04",
+        title: "Memulo 04",
         category: "memulo",
         collection: "Memulo: A Celebration of Tradition",
         image: "images/Memulo-Event-Photography (4).jpg",
@@ -90,7 +97,7 @@ const photos = [
     },
     {
         id: 11,
-        title: "The Celebration 05",
+        title: "Memulo 05",
         category: "memulo",
         collection: "Memulo: A Celebration of Tradition",
         image: "images/Memulo-Event-Photography (5).jpg",
@@ -98,122 +105,129 @@ const photos = [
     },
     {
         id: 12,
-        title: "The Celebration 06",
+        title: "Memulo 06",
         category: "memulo",
         collection: "Memulo: A Celebration of Tradition",
         image: "images/Memulo-Event-Photography (6).jpg",
         description: "The final frames from the Memulo collection."
     },
 
-    // THE NEXT CHAPTER
+
+    // PILOT PHOTOGRAPHY
     {
         id: 13,
-        title: "The Next Chapter 01",
+        title: "Pilot Photography 01",
         category: "graduation",
-        collection: "The Next Chapter",
+        collection: "Above the Clouds: Pilot Photography",
         image: "images/Pilot-Graduation-Photography (1).jpg",
-        description: "Celebrating achievement and new beginnings."
+        description: "Celebrating the journey towards the skies."
     },
     {
         id: 14,
-        title: "The Next Chapter 02",
+        title: "Pilot Photography 02",
         category: "graduation",
-        collection: "The Next Chapter",
+        collection: "Above the Clouds: Pilot Photography",
         image: "images/Pilot-Graduation-Photography (2).jpg",
-        description: "A milestone worth remembering."
+        description: "A milestone in the pursuit of aviation."
     },
     {
         id: 15,
-        title: "The Next Chapter 03",
+        title: "Pilot Photography 03",
         category: "graduation",
-        collection: "The Next Chapter",
+        collection: "Above the Clouds: Pilot Photography",
         image: "images/Pilot-Graduation-Photography (3).jpg",
-        description: "Recognising dedication, growth and achievement."
+        description: "Recognising dedication, ambition and achievement."
     },
     {
         id: 16,
-        title: "The Next Chapter 04",
+        title: "Pilot Photography 04",
         category: "graduation",
-        collection: "The Next Chapter",
+        collection: "Above the Clouds: Pilot Photography",
         image: "images/Pilot-Graduation-Photography (4).jpg",
-        description: "Capturing an important moment in a journey."
+        description: "Capturing an important moment in an aviation journey."
     },
     {
         id: 17,
-        title: "The Next Chapter 05",
+        title: "Pilot Photography 05",
         category: "graduation",
-        collection: "The Next Chapter",
+        collection: "Above the Clouds: Pilot Photography",
         image: "images/Pilot-Graduation-Photography (5).jpg",
         description: "A celebration of hard work and progress."
     },
     {
         id: 18,
-        title: "The Next Chapter 06",
+        title: "Pilot Photography 06",
         category: "graduation",
-        collection: "The Next Chapter",
+        collection: "Above the Clouds: Pilot Photography",
         image: "images/Pilot-Graduation-Photography (6).jpg",
-        description: "The beginning of something new."
+        description: "The beginning of a new journey."
     }
+
 ];
 
 
-/* COLLECTIONS */
+// COLLECTIONS
 
 const collections = [
     {
+        id: "portraits",
         title: "The Portrait Sessions",
         description: "People, identity and individual expression.",
         image: "images/Individual-Photography (1).jpg",
-        category: "portraits"
+        category: "portraits",
+        subtitle: "PORTRAIT PHOTOGRAPHY"
     },
     {
+        id: "memulo",
         title: "Memulo: A Celebration of Tradition",
         description: "Culture, family and meaningful celebrations.",
         image: "images/Memulo-Event-Photography (1).jpg",
-        category: "memulo"
+        category: "memulo",
+        subtitle: "CULTURE & CELEBRATION"
     },
     {
-        title: "The Next Chapter",
-        description: "Milestones, achievement and new beginnings.",
+        id: "graduation",
+        title: "Above the Clouds: Pilot Photography",
+        description: "Aviation, ambition and the journey towards the skies.",
         image: "images/Pilot-Graduation-Photography (1).jpg",
-        category: "graduation"
+        category: "graduation",
+        subtitle: "PILOT PHOTOGRAPHY"
     }
 ];
 
 
-/* APP STATE */
+// APP STATE
 
 let activeCategory = "all";
 let activePhoto = null;
-let currentPage = "home";
 let sortLatest = true;
-
-let likedPhotos = JSON.parse(
-    localStorage.getItem("reverbLiked") || "[]"
-);
-
-let savedPhotos = JSON.parse(
-    localStorage.getItem("reverbSaved") || "[]"
-);
+let currentCatalogue = null;
 
 
-/* SAVE USER DATA */
+// ELEMENTS
 
-function saveData() {
-    localStorage.setItem("reverbLiked", JSON.stringify(likedPhotos));
-    localStorage.setItem("reverbSaved", JSON.stringify(savedPhotos));
+const photoModal = document.getElementById("photoModal");
+const searchInput = document.getElementById("searchInput");
+
+
+// ICONS
+
+function refreshIcons() {
+    if (window.lucide) {
+        lucide.createIcons();
+    }
 }
 
 
-/* PHOTO CARD */
+// PHOTO CARD
 
 function createPhotoCard(photo) {
-    const isLiked = likedPhotos.includes(photo.id);
-    const isSaved = savedPhotos.includes(photo.id);
 
     return `
         <article class="photo-card">
+
             <div class="photo-image-wrap">
+
                 <img
                     src="${photo.image}"
                     alt="${photo.title}"
@@ -222,88 +236,65 @@ function createPhotoCard(photo) {
                     data-view="${photo.id}"
                 >
 
-                <div class="photo-overlay">
-                    <button class="${isLiked ? "liked" : ""}"
-                        data-like="${photo.id}" title="Like photograph">
-                        <i data-lucide="heart"></i>
-                    </button>
-
-                    <button class="${isSaved ? "saved" : ""}"
-                        data-save="${photo.id}" title="Save photograph">
-                        <i data-lucide="bookmark"></i>
-                    </button>
-                </div>
             </div>
 
             <div class="photo-meta">
+
                 <div>
                     <h3>${photo.title}</h3>
                     <p>${photo.collection}</p>
                 </div>
 
-                <div class="photo-stats">
-                    <i data-lucide="heart"></i>
-                    ${isLiked ? 1 : 0}
-                </div>
             </div>
+
         </article>
     `;
 }
 
 
-/* RENDER PHOTOS */
+// RENDER PHOTOS
 
 function renderPhotos(target, list) {
+
     const container = document.getElementById(target);
+
     if (!container) return;
 
     container.innerHTML = list.map(createPhotoCard).join("");
 
-    if (window.lucide) lucide.createIcons();
+    refreshIcons();
 }
 
 
-/* FILTER AND SORT */
+// FILTER PHOTOS
 
 function getFilteredPhotos() {
+
     let result = [...photos];
 
     if (activeCategory !== "all") {
-        result = result.filter(
-            photo => photo.category === activeCategory
+        result = result.filter(photo =>
+            photo.category === activeCategory
         );
     }
 
     if (sortLatest) {
         result.sort((a, b) => b.id - a.id);
     } else {
-        result.sort((a, b) =>
-            Number(likedPhotos.includes(b.id)) -
-            Number(likedPhotos.includes(a.id))
-        );
+        result.sort((a, b) => a.id - b.id);
     }
 
     return result;
 }
 
 
-/* UPDATE GRIDS */
+// HOME GRID
 
-function updateAllGrids() {
+function updateHomeGrid() {
+
     const filtered = getFilteredPhotos();
 
     renderPhotos("photoGrid", filtered);
-    renderPhotos("exploreGrid", photos);
-
-    renderPhotos(
-        "likedGrid",
-        photos.filter(photo => likedPhotos.includes(photo.id))
-    );
-
-    renderPhotos(
-        "savedGrid",
-        photos.filter(photo => savedPhotos.includes(photo.id))
-    );
 
     const emptyState = document.getElementById("emptyState");
 
@@ -314,326 +305,367 @@ function updateAllGrids() {
 }
 
 
-/* CATEGORY FILTERS */
+// CATEGORY FILTERS
 
 document.querySelectorAll(".category-chip").forEach(button => {
+
     button.addEventListener("click", () => {
-        document.querySelectorAll(".category-chip").forEach(btn => {
-            btn.classList.remove("active");
+
+        document.querySelectorAll(".category-chip").forEach(chip => {
+            chip.classList.remove("active");
         });
 
         button.classList.add("active");
+
         activeCategory = button.dataset.category;
 
-        updateAllGrids();
+        updateHomeGrid();
     });
+
 });
 
 
-/* SEARCH */
-
-const searchInput = document.getElementById("searchInput");
+// SEARCH
 
 searchInput.addEventListener("input", () => {
+
     const query = searchInput.value.toLowerCase().trim();
 
-    const results = getFilteredPhotos().filter(photo =>
-        photo.title.toLowerCase().includes(query) ||
-        photo.category.toLowerCase().includes(query) ||
-        photo.collection.toLowerCase().includes(query) ||
-        photo.description.toLowerCase().includes(query)
-    );
+    const results = photos.filter(photo => {
+
+        const matchesQuery =
+            photo.title.toLowerCase().includes(query) ||
+            photo.category.toLowerCase().includes(query) ||
+            photo.collection.toLowerCase().includes(query) ||
+            photo.description.toLowerCase().includes(query);
+
+        const matchesCategory =
+            activeCategory === "all" ||
+            photo.category === activeCategory;
+
+        return matchesQuery && matchesCategory;
+    });
+
+    showPage("home");
 
     renderPhotos("photoGrid", results);
 
     document.getElementById("emptyState").style.display =
         results.length === 0 ? "block" : "none";
 
-    showPage("home");
 });
 
 
-/* SORTING */
+// SORTING
 
 document.getElementById("sortButton").addEventListener("click", () => {
+
     sortLatest = !sortLatest;
 
     document.getElementById("sortButton").innerHTML = `
         <i data-lucide="sliders-horizontal"></i>
-        ${sortLatest ? "Latest" : "Popular"}
+        ${sortLatest ? "Latest" : "Oldest"}
     `;
 
-    updateAllGrids();
-    lucide.createIcons();
+    updateHomeGrid();
+
+    refreshIcons();
 });
 
 
-/* NAVIGATION */
+// PAGE NAVIGATION
 
 function showPage(page) {
-    currentPage = page;
 
     document.querySelectorAll(".page").forEach(section => {
         section.classList.remove("active-page");
     });
 
     const selectedPage = document.getElementById(page);
-    if (selectedPage) selectedPage.classList.add("active-page");
+
+    if (selectedPage) {
+        selectedPage.classList.add("active-page");
+    }
 
     document.querySelectorAll("[data-page]").forEach(link => {
-        link.classList.toggle("active", link.dataset.page === page);
+
+        link.classList.toggle(
+            "active",
+            link.dataset.page === page
+        );
+
     });
 
-    if (page === "explore") renderPhotos("exploreGrid", photos);
-
-    if (page === "liked") {
-        renderPhotos("likedGrid",
-            photos.filter(photo => likedPhotos.includes(photo.id)));
+    if (page === "explore") {
+        renderExplore();
     }
 
-    if (page === "saved") {
-        renderPhotos("savedGrid",
-            photos.filter(photo => savedPhotos.includes(photo.id)));
+    if (page === "collections") {
+        renderCollections();
     }
 
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+    refreshIcons();
 }
 
 
+// NAVIGATION CLICK EVENTS
+
 document.addEventListener("click", event => {
+
     const link = event.target.closest("[data-page]");
 
     if (link) {
         event.preventDefault();
         showPage(link.dataset.page);
     }
+
 });
 
 
-/* EXPLORE TILES */
+// EXPLORE PAGE
 
-document.querySelectorAll(".explore-tile").forEach(tile => {
-    tile.addEventListener("click", () => {
-        activeCategory = tile.dataset.category;
+function renderExplore() {
 
-        document.querySelectorAll(".category-chip").forEach(chip => {
-            chip.classList.toggle(
-                "active",
-                chip.dataset.category === activeCategory
-            );
-        });
+    const container = document.getElementById("exploreGrid");
 
-        updateAllGrids();
-        showPage("home");
-    });
-});
-
-
-/* COLLECTIONS */
-
-function renderCollections() {
-    const container = document.getElementById("collectionGrid");
     if (!container) return;
 
     container.innerHTML = collections.map(collection => `
-        <div class="collection-card"
-             data-collection="${collection.category}">
+        <div class="explore-tile"
+             data-open-collection="${collection.id}">
 
-            <img src="${collection.image}"
-                 alt="${collection.title}"
-                 loading="lazy">
+            <img
+                src="${collection.image}"
+                alt="${collection.title}"
+                loading="lazy"
+            >
 
             <div>
-                <h3>${collection.title}</h3>
-                <p>${collection.description}</p>
+                <h2>${collection.title}</h2>
+                <span>${collection.description}</span>
             </div>
+
         </div>
     `).join("");
+
+    refreshIcons();
 }
 
-renderCollections();
+
+// COLLECTIONS PAGE
+
+function renderCollections() {
+
+    const container = document.getElementById("collectionGrid");
+
+    if (!container) return;
+
+    container.innerHTML = collections.map(collection => `
+        <article
+            class="collection-card"
+            data-open-collection="${collection.id}"
+            tabindex="0"
+            role="button"
+            aria-label="Open ${collection.title}"
+        >
+
+            <div class="collection-image-wrap">
+                <img
+                    src="${collection.image}"
+                    alt="${collection.title}"
+                    loading="lazy"
+                >
+            </div>
+
+            <div class="collection-info">
+
+                <span class="collection-label">${collection.subtitle}</span>
+
+                <h3>${collection.title}</h3>
+
+                <p>${collection.description}</p>
+
+                <span class="collection-link">
+                    View collection
+                    <i data-lucide="arrow-up-right"></i>
+                </span>
+
+            </div>
+
+        </article>
+    `).join("");
+
+    refreshIcons();
+}
 
 
-document.getElementById("collectionGrid").addEventListener("click", event => {
-    const card = event.target.closest("[data-collection]");
-    if (!card) return;
+// OPEN A COLLECTION'S OWN PAGE
 
-    activeCategory = card.dataset.collection;
+function openCollection(collectionId) {
 
-    document.querySelectorAll(".category-chip").forEach(chip => {
-        chip.classList.toggle(
-            "active",
-            chip.dataset.category === activeCategory
-        );
-    });
+    const collection = collections.find(item =>
+        item.id === collectionId
+    );
 
-    updateAllGrids();
-    showPage("home");
-});
+    if (!collection) return;
+
+    currentCatalogue = collection;
+
+    const collectionPhotos = photos.filter(photo =>
+        photo.category === collection.category
+    );
+
+    document.getElementById("catalogueEyebrow").textContent =
+        collection.subtitle;
+
+    document.getElementById("catalogueTitle").textContent =
+        collection.title;
+
+    document.getElementById("catalogueDescription").textContent =
+        collection.description;
+
+    document.getElementById("catalogueCount").textContent =
+        `${collectionPhotos.length} photographs`;
+
+    renderPhotos("catalogueGrid", collectionPhotos);
+
+    showPage("cataloguePage");
+}
 
 
-/* LIKE AND SAVE */
+// COLLECTION CLICK EVENTS
 
 document.addEventListener("click", event => {
-    const likeButton = event.target.closest("[data-like]");
 
-    if (likeButton) {
-        const id = Number(likeButton.dataset.like);
+    const collectionLink = event.target.closest("[data-open-collection]");
 
-        likedPhotos = likedPhotos.includes(id)
-            ? likedPhotos.filter(item => item !== id)
-            : [...likedPhotos, id];
+    if (!collectionLink) return;
 
-        saveData();
-        updateAllGrids();
-        return;
-    }
+    event.preventDefault();
 
-    const saveButton = event.target.closest("[data-save]");
+    openCollection(collectionLink.dataset.openCollection);
 
-    if (saveButton) {
-        const id = Number(saveButton.dataset.save);
-
-        savedPhotos = savedPhotos.includes(id)
-            ? savedPhotos.filter(item => item !== id)
-            : [...savedPhotos, id];
-
-        saveData();
-        updateAllGrids();
-    }
 });
 
 
-/* PHOTO VIEWER */
+// KEYBOARD ACCESS FOR COLLECTION CARDS
 
-const photoModal = document.getElementById("photoModal");
+document.addEventListener("keydown", event => {
+
+    if (
+        event.key !== "Enter" &&
+        event.key !== " "
+    ) return;
+
+    const collectionCard = event.target.closest("[data-open-collection]");
+
+    if (collectionCard && collectionCard.tagName === "ARTICLE") {
+
+        event.preventDefault();
+
+        openCollection(collectionCard.dataset.openCollection);
+    }
+
+});
+
+
+// BACK TO COLLECTIONS
+
+document.getElementById("backToCollections").addEventListener("click", () => {
+
+    showPage("collections");
+
+});
+
+
+// FEATURED COLLECTION BUTTON
+
+document.querySelectorAll("[data-open-collection]").forEach(button => {
+
+    button.addEventListener("click", () => {
+        openCollection(button.dataset.openCollection);
+    });
+
+});
+
+
+// PHOTO VIEWER
 
 function openPhoto(id) {
+
     const photo = photos.find(item => item.id === id);
+
     if (!photo) return;
 
     activePhoto = photo;
 
     document.getElementById("modalImage").src = photo.image;
-    document.getElementById("modalTitle").textContent = photo.title;
+
+    document.getElementById("modalTitle").textContent =
+        photo.title;
+
     document.getElementById("modalDescription").textContent =
         photo.description;
 
     photoModal.classList.add("open");
-    document.body.style.overflow = "hidden";
 
-    updateModalButtons();
+    document.body.style.overflow = "hidden";
 }
 
 
 function closePhoto() {
+
     photoModal.classList.remove("open");
+
     document.body.style.overflow = "";
+
     activePhoto = null;
 }
 
 
+// OPEN PHOTO ON CLICK
+
 document.addEventListener("click", event => {
+
     const image = event.target.closest("[data-view]");
 
-    if (image) openPhoto(Number(image.dataset.view));
+    if (image) {
+        openPhoto(Number(image.dataset.view));
+    }
+
 });
 
+
+// CLOSE PHOTO
 
 document.getElementById("modalClose").addEventListener("click", closePhoto);
 
 photoModal.addEventListener("click", event => {
-    if (event.target === photoModal) closePhoto();
+
+    if (event.target === photoModal) {
+        closePhoto();
+    }
+
 });
 
 document.addEventListener("keydown", event => {
-    if (event.key === "Escape") closePhoto();
-});
 
-
-/* MODAL BUTTONS */
-
-function updateModalButtons() {
-    if (!activePhoto) return;
-
-    const liked = likedPhotos.includes(activePhoto.id);
-    const saved = savedPhotos.includes(activePhoto.id);
-
-    document.getElementById("modalLike").innerHTML = `
-        <i data-lucide="heart"></i>
-        ${liked ? "Liked" : "Like"}
-    `;
-
-    document.getElementById("modalSave").innerHTML = `
-        <i data-lucide="bookmark"></i>
-        ${saved ? "Saved" : "Save"}
-    `;
-
-    lucide.createIcons();
-}
-
-
-document.getElementById("modalLike").addEventListener("click", () => {
-    if (!activePhoto) return;
-
-    const id = activePhoto.id;
-
-    likedPhotos = likedPhotos.includes(id)
-        ? likedPhotos.filter(item => item !== id)
-        : [...likedPhotos, id];
-
-    saveData();
-    updateAllGrids();
-    updateModalButtons();
-});
-
-
-document.getElementById("modalSave").addEventListener("click", () => {
-    if (!activePhoto) return;
-
-    const id = activePhoto.id;
-
-    savedPhotos = savedPhotos.includes(id)
-        ? savedPhotos.filter(item => item !== id)
-        : [...savedPhotos, id];
-
-    saveData();
-    updateAllGrids();
-    updateModalButtons();
-});
-
-
-/* SHARE */
-
-document.getElementById("modalShare").addEventListener("click", async () => {
-    if (!activePhoto) return;
-
-    const shareData = {
-        title: activePhoto.title,
-        text: activePhoto.description,
-        url: window.location.href
-    };
-
-    try {
-        if (navigator.share) {
-            await navigator.share(shareData);
-        } else if (navigator.clipboard) {
-            await navigator.clipboard.writeText(
-                `${shareData.title} - ${shareData.url}`
-            );
-            alert("Link copied!");
-        } else {
-            alert("Sharing is not supported on this browser.");
-        }
-    } catch (error) {
-        if (error.name !== "AbortError") {
-            console.error("Sharing failed:", error);
-        }
+    if (event.key === "Escape") {
+        closePhoto();
     }
+
 });
 
 
-/* INITIALIZE */
+// INITIALIZE
 
-updateAllGrids();
-lucide.createIcons();
+updateHomeGrid();
+renderExplore();
+renderCollections();
+refreshIcons();
+
