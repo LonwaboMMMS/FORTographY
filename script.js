@@ -7,11 +7,109 @@
 const CONTACT_EMAIL = "fortography@reverbdailymedia.co.za";
 
 
+// =====================================
+// THEME SETTINGS
+// =====================================
+
+const darkLogo = "images/Reverb%20FORTography%20Logo%20(For%20Dark%20Mode).png";
+const lightLogo = "images/Reverb%20FORTography%20Logo%20(For%20Light%20Mode).png";
+
+const themeToggle = document.getElementById("themeToggle");
+
+function refreshIcons() {
+    if (window.lucide) {
+        lucide.createIcons();
+    }
+}
+
+function setTheme(theme) {
+
+    document.documentElement.setAttribute("data-theme", theme);
+
+    const selectedLogo = theme === "dark" ? darkLogo : lightLogo;
+
+    const sidebarLogo = document.getElementById("sidebarLogo");
+    const mobileLogo = document.getElementById("mobileLogo");
+
+    if (sidebarLogo) {
+        sidebarLogo.src = selectedLogo;
+    }
+
+    if (mobileLogo) {
+        mobileLogo.src = selectedLogo;
+    }
+
+    if (themeToggle) {
+
+        themeToggle.innerHTML = theme === "dark"
+            ? '<i data-lucide="sun"></i>'
+            : '<i data-lucide="moon"></i>';
+
+        themeToggle.setAttribute(
+            "aria-label",
+            theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+        );
+
+        themeToggle.setAttribute(
+            "title",
+            theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+        );
+    }
+
+    const themeColor = document.querySelector('meta[name="theme-color"]');
+
+    if (themeColor) {
+        themeColor.setAttribute(
+            "content",
+            theme === "dark" ? "#121212" : "#f5f5f5"
+        );
+    }
+
+    try {
+        localStorage.setItem("fortography-theme", theme);
+    } catch (error) {
+        console.warn("Theme preference could not be saved.");
+    }
+
+    refreshIcons();
+}
+
+
+// Load saved theme
+let savedTheme = "dark";
+
+try {
+    savedTheme = localStorage.getItem("fortography-theme") || "dark";
+} catch (error) {
+    savedTheme = "dark";
+}
+
+setTheme(savedTheme);
+
+
+// Toggle theme
+if (themeToggle) {
+
+    themeToggle.addEventListener("click", () => {
+
+        const currentTheme =
+            document.documentElement.getAttribute("data-theme");
+
+        setTheme(currentTheme === "dark" ? "light" : "dark");
+
+    });
+
+}
+
+
+// =====================================
 // PHOTOGRAPHS
+// =====================================
 
 const photos = [
 
     // PORTRAIT SESSIONS
+
     {
         id: 1,
         title: "Portrait Session 01",
@@ -63,6 +161,7 @@ const photos = [
 
 
     // MEMULO PHOTOGRAPHY
+
     {
         id: 7,
         title: "Memulo 01",
@@ -114,6 +213,7 @@ const photos = [
 
 
     // PILOT PHOTOGRAPHY
+
     {
         id: 13,
         title: "Pilot Photography 01",
@@ -166,9 +266,12 @@ const photos = [
 ];
 
 
+// =====================================
 // COLLECTIONS
+// =====================================
 
 const collections = [
+
     {
         id: "portraits",
         title: "The Portrait Sessions",
@@ -193,10 +296,13 @@ const collections = [
         category: "graduation",
         subtitle: "PILOT PHOTOGRAPHY"
     }
+
 ];
 
 
+// =====================================
 // APP STATE
+// =====================================
 
 let activeCategory = "all";
 let activePhoto = null;
@@ -204,22 +310,17 @@ let sortLatest = true;
 let currentCatalogue = null;
 
 
+// =====================================
 // ELEMENTS
+// =====================================
 
 const photoModal = document.getElementById("photoModal");
 const searchInput = document.getElementById("searchInput");
 
 
-// ICONS
-
-function refreshIcons() {
-    if (window.lucide) {
-        lucide.createIcons();
-    }
-}
-
-
+// =====================================
 // PHOTO CARD
+// =====================================
 
 function createPhotoCard(photo) {
 
@@ -252,7 +353,9 @@ function createPhotoCard(photo) {
 }
 
 
+// =====================================
 // RENDER PHOTOS
+// =====================================
 
 function renderPhotos(target, list) {
 
@@ -266,7 +369,9 @@ function renderPhotos(target, list) {
 }
 
 
+// =====================================
 // FILTER PHOTOS
+// =====================================
 
 function getFilteredPhotos() {
 
@@ -288,7 +393,9 @@ function getFilteredPhotos() {
 }
 
 
+// =====================================
 // HOME GRID
+// =====================================
 
 function updateHomeGrid() {
 
@@ -305,7 +412,9 @@ function updateHomeGrid() {
 }
 
 
+// =====================================
 // CATEGORY FILTERS
+// =====================================
 
 document.querySelectorAll(".category-chip").forEach(button => {
 
@@ -319,44 +428,58 @@ document.querySelectorAll(".category-chip").forEach(button => {
 
         activeCategory = button.dataset.category;
 
+        if (searchInput) {
+            searchInput.value = "";
+        }
+
         updateHomeGrid();
+
     });
 
 });
 
 
+// =====================================
 // SEARCH
+// =====================================
 
-searchInput.addEventListener("input", () => {
+if (searchInput) {
 
-    const query = searchInput.value.toLowerCase().trim();
+    searchInput.addEventListener("input", () => {
 
-    const results = photos.filter(photo => {
+        const query = searchInput.value.toLowerCase().trim();
 
-        const matchesQuery =
-            photo.title.toLowerCase().includes(query) ||
-            photo.category.toLowerCase().includes(query) ||
-            photo.collection.toLowerCase().includes(query) ||
-            photo.description.toLowerCase().includes(query);
+        const results = photos.filter(photo => {
 
-        const matchesCategory =
-            activeCategory === "all" ||
-            photo.category === activeCategory;
+            const matchesQuery =
+                photo.title.toLowerCase().includes(query) ||
+                photo.category.toLowerCase().includes(query) ||
+                photo.collection.toLowerCase().includes(query) ||
+                photo.description.toLowerCase().includes(query);
 
-        return matchesQuery && matchesCategory;
+            const matchesCategory =
+                activeCategory === "all" ||
+                photo.category === activeCategory;
+
+            return matchesQuery && matchesCategory;
+
+        });
+
+        showPage("home");
+
+        renderPhotos("photoGrid", results);
+
+        document.getElementById("emptyState").style.display =
+            results.length === 0 ? "block" : "none";
+
     });
 
-    showPage("home");
-
-    renderPhotos("photoGrid", results);
-
-    document.getElementById("emptyState").style.display =
-        results.length === 0 ? "block" : "none";
-
-});
+}
 
 
+// =====================================
 // SORTING
+// =====================================
 
 document.getElementById("sortButton").addEventListener("click", () => {
 
@@ -370,10 +493,13 @@ document.getElementById("sortButton").addEventListener("click", () => {
     updateHomeGrid();
 
     refreshIcons();
+
 });
 
 
+// =====================================
 // PAGE NAVIGATION
+// =====================================
 
 function showPage(page) {
 
@@ -413,21 +539,26 @@ function showPage(page) {
 }
 
 
-// NAVIGATION CLICK EVENTS
+// Navigation click events
 
 document.addEventListener("click", event => {
 
     const link = event.target.closest("[data-page]");
 
     if (link) {
+
         event.preventDefault();
+
         showPage(link.dataset.page);
+
     }
 
 });
 
 
+// =====================================
 // EXPLORE PAGE
+// =====================================
 
 function renderExplore() {
 
@@ -436,8 +567,14 @@ function renderExplore() {
     if (!container) return;
 
     container.innerHTML = collections.map(collection => `
-        <div class="explore-tile"
-             data-open-collection="${collection.id}">
+
+        <div
+            class="explore-tile"
+            data-open-collection="${collection.id}"
+            role="button"
+            tabindex="0"
+            aria-label="Explore ${collection.title}"
+        >
 
             <img
                 src="${collection.image}"
@@ -451,13 +588,16 @@ function renderExplore() {
             </div>
 
         </div>
+
     `).join("");
 
     refreshIcons();
 }
 
 
+// =====================================
 // COLLECTIONS PAGE
+// =====================================
 
 function renderCollections() {
 
@@ -466,6 +606,7 @@ function renderCollections() {
     if (!container) return;
 
     container.innerHTML = collections.map(collection => `
+
         <article
             class="collection-card"
             data-open-collection="${collection.id}"
@@ -475,11 +616,13 @@ function renderCollections() {
         >
 
             <div class="collection-image-wrap">
+
                 <img
                     src="${collection.image}"
                     alt="${collection.title}"
                     loading="lazy"
                 >
+
             </div>
 
             <div class="collection-info">
@@ -498,13 +641,16 @@ function renderCollections() {
             </div>
 
         </article>
+
     `).join("");
 
     refreshIcons();
 }
 
 
-// OPEN A COLLECTION'S OWN PAGE
+// =====================================
+// OPEN A COLLECTION
+// =====================================
 
 function openCollection(collectionId) {
 
@@ -538,7 +684,7 @@ function openCollection(collectionId) {
 }
 
 
-// COLLECTION CLICK EVENTS
+// Collection click events
 
 document.addEventListener("click", event => {
 
@@ -553,28 +699,28 @@ document.addEventListener("click", event => {
 });
 
 
-// KEYBOARD ACCESS FOR COLLECTION CARDS
+// Keyboard access for collection cards
 
 document.addEventListener("keydown", event => {
 
-    if (
-        event.key !== "Enter" &&
-        event.key !== " "
-    ) return;
+    if (event.key !== "Enter" && event.key !== " ") return;
 
     const collectionCard = event.target.closest("[data-open-collection]");
 
-    if (collectionCard && collectionCard.tagName === "ARTICLE") {
+    if (collectionCard) {
 
         event.preventDefault();
 
         openCollection(collectionCard.dataset.openCollection);
+
     }
 
 });
 
 
+// =====================================
 // BACK TO COLLECTIONS
+// =====================================
 
 document.getElementById("backToCollections").addEventListener("click", () => {
 
@@ -583,18 +729,9 @@ document.getElementById("backToCollections").addEventListener("click", () => {
 });
 
 
-// FEATURED COLLECTION BUTTON
-
-document.querySelectorAll("[data-open-collection]").forEach(button => {
-
-    button.addEventListener("click", () => {
-        openCollection(button.dataset.openCollection);
-    });
-
-});
-
-
+// =====================================
 // PHOTO VIEWER
+// =====================================
 
 function openPhoto(id) {
 
@@ -628,7 +765,7 @@ function closePhoto() {
 }
 
 
-// OPEN PHOTO ON CLICK
+// Open photo on click
 
 document.addEventListener("click", event => {
 
@@ -641,7 +778,7 @@ document.addEventListener("click", event => {
 });
 
 
-// CLOSE PHOTO
+// Close photo
 
 document.getElementById("modalClose").addEventListener("click", closePhoto);
 
@@ -662,10 +799,14 @@ document.addEventListener("keydown", event => {
 });
 
 
-// INITIALIZE
+// =====================================
+// INITIALIZE WEBSITE
+// =====================================
 
 updateHomeGrid();
-renderExplore();
-renderCollections();
-refreshIcons();
 
+renderExplore();
+
+renderCollections();
+
+refreshIcons();
