@@ -309,7 +309,6 @@ let currentCatalogue = null;
 // =====================================
 
 const photoModal = document.getElementById("photoModal");
-const searchInput = document.getElementById("searchInput");
 
 
 // =====================================
